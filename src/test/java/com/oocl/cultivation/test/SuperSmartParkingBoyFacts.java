@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SuperSmartParkingBoyFacts {
 
@@ -47,7 +46,7 @@ class SuperSmartParkingBoyFacts {
         assertSame(selectedParkingLot, parkingLot1);
     }
 
-    //given 2 parking lots in parking center with both full and assigned to smart parking boy
+    //given 2 parking lots in parking center with both full and assigned to super smart parking boy
     //when SuperSmartParkingBoy select parking lot to park car
     //then car will not parked
     @Test
@@ -62,4 +61,18 @@ class SuperSmartParkingBoyFacts {
         assertNull(superSmartParkingBoy.park(new Car()));
     }
 
+    //given full parking lot
+    //when parkingBoy fetch one car
+    //then he can park a new car
+    @Test
+    void should_fetch_car_and_remove_from_parking_lot() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingLotCenter parkingLotCenter = new ParkingLotCenter(Arrays.asList(parkingLot));
+        ParkingBoy ParkingBoy = new ParkingBoy(parkingLotCenter);
+        Car oldCar = new Car();
+        ParkingTicket oldTicket = ParkingBoy.park(oldCar);
+        ParkingBoy.fetch(oldTicket);
+        assertNotNull(ParkingBoy.park(new Car()));
+
+    }
 }
